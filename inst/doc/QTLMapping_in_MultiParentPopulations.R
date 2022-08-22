@@ -63,7 +63,7 @@ plot(ABCMPP, plotType = "singleGeno", genotype = "AxB0001")
 ## ----ABCSQM-----------------------------------------------------------------------------
 ## Perform Single-QTL Mapping.
 ABCSQM <- selQTLMPP(MPPobj = ABCMPP,
-                    trait = "pheno",
+                    trait = "yield",
                     maxCofactors = 0)
 
 ## ----QPABCSQM---------------------------------------------------------------------------
@@ -73,8 +73,16 @@ plot(ABCSQM, plotType = "QTLProfile")
 ## ----ABCMQM-----------------------------------------------------------------------------
 ## Perform Multi-QTL Mapping.
 ABCMQM <- selQTLMPP(MPPobj = ABCMPP,
-                    trait = "pheno",
+                    trait = "yield",
                     threshold = 3)
+
+## ----ABCMQM_kin, eval=FALSE-------------------------------------------------------------
+#  ## Perform Multi-QTL Mapping.
+#  # Compute kinship matrices.
+#  ABCMQM_kin <- selQTLMPP(MPPobj = ABCMPP,
+#                          trait = "yield",
+#                          threshold = 3,
+#                          computeKin = TRUE)
 
 ## ----plotQRABCMQM-----------------------------------------------------------------------
 ## Plot QTL Profile for ABC MQM.
@@ -98,12 +106,12 @@ summary(ABCMQM)
 
 ## ----extractABCRes----------------------------------------------------------------------
 ## Extract results of QTL mapping.
-ABCMQMres <- ABCMQM$GWAResult$pheno
+ABCMQMres <- ABCMQM$GWAResult$yield
 head(ABCMQMres[, 1:8])
 
 ## ----extractABCQTL----------------------------------------------------------------------
 ## Extract QTLs and markers within QTL windows.
-ABCMQMQTL <- ABCMQM$signSnp$pheno
+ABCMQMQTL <- ABCMQM$signSnp$yield
 head(ABCMQMQTL[, c(2:8, 10)])
 
 ## ----maizeIBD---------------------------------------------------------------------------
@@ -179,9 +187,9 @@ pedFile <- system.file("extdata/barley/barley_pedInfo.csv",
 data("barleyPheno")
 
 ## read RABBIT output. 
-barleyMPP <- readRABBIT(infile = inFile,
-                        pedFile = pedFile,
-                        pheno = barleyPheno)
+barleyMPP <- readRABBITMPP(infile = inFile,
+                           pedFile = pedFile,
+                           pheno = barleyPheno)
 
 ## ----sumPbarleyIBD----------------------------------------------------------------------
 ## Summary.
@@ -208,6 +216,16 @@ plot(barleyMQM, plotType = "QTLProfileExt", chr = 7)
 ## ----sumBarleyMQM-----------------------------------------------------------------------
 ## Summary.
 summary(barleyMQM)
+
+## ----ABCMQMPar, eval = FALSE------------------------------------------------------------
+#  ## Register parallel back-end with 2 cores.
+#  doParallel::registerDoParallel(cores = 2)
+#  
+#  ## Perform Multi-QTL Mapping.
+#  ABCMQM_Par <- selQTLMPP(MPPobj = ABCMPP,
+#                          trait = "yield",
+#                          threshold = 3,
+#                          parallel = TRUE)
 
 ## ----winddown, include = FALSE------------------------------------------------
 options(op)

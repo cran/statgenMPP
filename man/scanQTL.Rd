@@ -7,11 +7,14 @@
 scanQTL(
   modDat,
   map,
+  markers,
   parents,
   QTLwindow = 10,
   cof = NULL,
+  Usc = NULL,
   trait = NULL,
   maxIter = 100,
+  parallel = FALSE,
   verbose = FALSE
 )
 }

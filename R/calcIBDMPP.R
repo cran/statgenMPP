@@ -83,7 +83,7 @@
 #'
 #' summary(ABC)
 #'
-#' @importFrom utils read.delim
+#' @importFrom utils read.delim packageVersion
 #' @importFrom stats setNames
 #' @export
 calcIBDMPP <- function(crossNames,
@@ -175,15 +175,23 @@ calcIBDMPP <- function(crossNames,
   } else {
     phenoTot <- pheno
   }
-  ## Get marker names.
-  markerNames <- rownames(crossIBD$markers)
   ## Get number of parents.
   parents <- crossIBD$parents
   nPar <- length(parents)
   ## Construct empty marker matrix.
-  markers <- array(NA_real_, dim = c(dim(crossIBD$markers)[c(2, 1)], nPar),
-                   dimnames = c(dimnames(crossIBD$markers)[c(2, 1)],
-                                list(parents)))
+  if (packageVersion("statgenIBD") <= "1.0.4") {
+    ## Get marker names.
+    markerNames <- rownames(crossIBD$markers)
+    markers <- array(NA_real_, dim = c(dim(crossIBD$markers)[c(2, 1)], nPar),
+                     dimnames = c(dimnames(crossIBD$markers)[c(2, 1)],
+                                  list(parents)))
+  } else {
+    ## Get marker names.
+    markerNames <- colnames(crossIBD$markers)
+    markers <- array(NA_real_, dim = dim(crossIBD$markers),
+                     dimnames = c(dimnames(crossIBD$markers)[1:2],
+                                  list(parents)))
+  }
   ## Fill marker matrix.
   for (i in seq_along(markerNames)) {
     markers[, i, ] <- markers3DtoMat(markers = crossIBD$markers,
@@ -196,10 +204,10 @@ calcIBDMPP <- function(crossNames,
   mapOrig <- mapOrig[, -1]
   colnames(mapOrig) <- c("chr", "pos")
   ## Create gDataMPP object.
-  MPPobj <- createGDataMPP(geno = markers,
-                           map = crossIBD$map,
-                           pheno = phenoTot,
-                           covar = covar)
+  MPPobj <- createGDataMPPInternal(geno = markers,
+                                   map = crossIBD$map,
+                                   pheno = phenoTot,
+                                   covar = covar)
   attr(x = MPPobj, which = "popType") <- crossIBD$popType
   attr(x = MPPobj, which = "pedigree") <- crossIBD$pedigree
   attr(x = MPPobj, which = "genoCross") <- attr(x = crossIBD, which = "genoCross")

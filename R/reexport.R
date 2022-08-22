@@ -12,6 +12,9 @@ createGWAS <- getFromNamespace(x = "createGWAS", ns = "statgenGWAS")
 plot.GWAS <- getFromNamespace(x = "plot.GWAS", ns = "statgenGWAS")
 
 #' @keywords internal
+nearestPD <- getFromNamespace(x = "nearestPD", ns = "statgenGWAS")
+
+#' @keywords internal
 markers3DtoMat <- getFromNamespace(x = "markers3DtoMat", ns = "statgenIBD")
 
 #' @keywords internal
@@ -22,3 +25,9 @@ singleGenoPlot <- getFromNamespace(x = "singleGenoPlot", ns = "statgenIBD")
 
 #' @keywords internal
 pedPlot <- getFromNamespace(x = "pedPlot", ns = "statgenIBD")
+
+#' @keywords internal
+constructRinv <- getFromNamespace(x = "constructRinv", ns = "LMMsolver")
+
+#' @keywords internal
+sparseMixedModels <- getFromNamespace(x = "sparseMixedModels", ns = "LMMsolver")
