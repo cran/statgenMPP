@@ -1,7 +1,7 @@
 Package: statgenMPP
 Title: QTL Mapping for Multi Parent Populations
-Version: 1.0.1
-Date: 2022-08-22
+Version: 1.0.1.1
+Date: 2022-08-24
 Authors@R: c(person(given = "Wenhao", 
                     family = "Li", 
                     email = "wenhao.li@wur.nl", 
@@ -35,7 +35,7 @@ Imports: data.table, foreach, ggplot2, gridExtra, LMMsolver, Matrix,
 Suggests: rmarkdown, knitr, tinytest
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2022-08-22 12:03:03 UTC; rossu027
+Packaged: 2022-08-24 08:58:31 UTC; rossu027
 Author: Wenhao Li [aut] (<https://orcid.org/0000-0001-5719-5775>),
   Martin Boer [aut] (<https://orcid.org/0000-0002-1879-4588>),
   Bart-Jan van Rossum [aut, cre]
@@ -43,4 +43,4 @@ Author: Wenhao Li [aut] (<https://orcid.org/0000-0001-5719-5775>),
   Fred van Eeuwijk [ctb] (<https://orcid.org/0000-0003-3672-2921>)
 Maintainer: Bart-Jan van Rossum <bart-jan.vanrossum@wur.nl>
 Repository: CRAN
-Date/Publication: 2022-08-22 12:50:02 UTC
+Date/Publication: 2022-08-24 09:30:02 UTC
