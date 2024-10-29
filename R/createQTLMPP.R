@@ -47,7 +47,8 @@ summary.QTLMPP <- function(object,
   signSnp[["evalPos"]] <- signSnp[["snp"]]
   ## Restrict columns for nicer output.
   signSnp <- signSnp[, c("evalPos", "chr", "pos", "mrkNear", "minlog10p",
-                         "varExpl", paste0("eff_", parents)), with = FALSE]
+                         "varExpl", paste0("eff_", parents),
+                         paste0("se_eff_", parents)), with = FALSE]
   ## Add attributes used for printing.
   res <- structure(signSnp,
                    class = c("summary.QTLMPP", "data.frame"),
@@ -86,12 +87,12 @@ print.summary.QTLMPP <- function(x,
 #'
 #' Creates a plot of an object of S3 class \code{QTLMPP}. The following types of
 #' plot can be made:
-#' \itemize{
-#' \item{QTLProfile}{ A QTL profile plot, i.e. a plot of \eqn{-log10(p)} values
+#' \describe{
+#' \item{QTLProfile}{A QTL profile plot, i.e. a plot of \eqn{-log10(p)} values
 #' per marker.}
-#' \item{parEffs} { A plot of effect sizes and directions per parent.}
-#' \item{QTLRegion}{ A plot highlighting the QTLs found on the genetic map.}
-#' \item{QTLProfileExt}{ A combination of the QTL profile and parental effects
+#' \item{parEffs}{A plot of effect sizes and directions per parent.}
+#' \item{QTLRegion}{A plot highlighting the QTLs found on the genetic map.}
+#' \item{QTLProfileExt}{A combination of the QTL profile and parental effects
 #' plotted above each other.}
 #' }
 #' See details for a detailed description of the plots and the plot options
@@ -294,7 +295,7 @@ plot.QTLMPP <- function(x,
       ## Add title here to assure font is the same as for other plots.
       p1 <- plot(x, chr = dotArgs$chr, plotType = "QTLProfile", title = title,
                  output = FALSE) +
-        ggplot2::geom_vline(ggplot2::aes_string(xintercept = "x"),
+        ggplot2::geom_vline(ggplot2::aes(xintercept = .data[["x"]]),
                             linetype = "dashed", data = vertDat[-1, ]) +
         ggplot2::theme(axis.ticks.x = ggplot2::element_blank(),
                        axis.text.x = ggplot2::element_blank(),
@@ -311,11 +312,12 @@ plot.QTLMPP <- function(x,
       ## Get widths.
       g1 <- ggplot2::ggplotGrob(p1)
       g2 <- ggplot2::ggplotGrob(p2)
-      maxWidth = grid::unit.pmax(g1$widths[2:9], g2$widths[2:9])
+      g1Widths <- g1$widths[-1]
+      g2Widths <- g2$widths[-1]
+      maxWidths <- grid::unit.pmax(g1Widths, g2Widths)
       ## Set widths.
-      g1$widths[2:9] <- maxWidth
-      g2$widths[2:9] <- maxWidth
-
+      g1$widths[-1] <- maxWidths
+      g2$widths[-1] <- maxWidths
       p <- gridExtra::grid.arrange(g1, g2)
     }
   }

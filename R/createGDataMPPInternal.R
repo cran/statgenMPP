@@ -178,7 +178,7 @@ createGDataMPPInternal <- function(gDataMPP = NULL,
         ## This might occur in RABBIT output.
         ## Remove those genotypes.
         genoNA <- apply(X = markers, MARGIN = 1, function(x) {
-          anyNA(x)
+          anyNA(x) | any(is.infinite(x))
         })
         if (any(genoNA)) {
           warning("The following genotypes have been removed because ",
@@ -348,7 +348,7 @@ print.summary.gDataMPP <- function(x,
 #'
 #' Creates a plot of an object of S3 class \code{gDataMPP}. The following types
 #' of plot can be made:
-#' \itemize{
+#' \describe{
 #' \item{\code{genMap}}{ A plot of the genetic map.}
 #' \item{\code{allGeno}}{ A plot showing for all genotypes the IBD
 #' probabilities of the parent with the highest probability per marker.}
