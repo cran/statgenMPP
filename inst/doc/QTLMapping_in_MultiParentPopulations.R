@@ -77,12 +77,12 @@ ABCMQM <- selQTLMPP(MPPobj = ABCMPP,
                     threshold = 3)
 
 ## ----ABCMQM_kin, eval=FALSE-------------------------------------------------------------
-#  ## Perform Multi-QTL Mapping.
-#  # Compute kinship matrices.
-#  ABCMQM_kin <- selQTLMPP(MPPobj = ABCMPP,
-#                          trait = "yield",
-#                          threshold = 3,
-#                          computeKin = TRUE)
+# ## Perform Multi-QTL Mapping.
+# # Compute kinship matrices.
+# ABCMQM_kin <- selQTLMPP(MPPobj = ABCMPP,
+#                         trait = "yield",
+#                         threshold = 3,
+#                         computeKin = TRUE)
 
 ## ----plotQRABCMQM-----------------------------------------------------------------------
 ## Plot QTL Profile for ABC MQM.
@@ -99,6 +99,10 @@ plot(ABCMQM, plotType = "parEffs")
 ## ----plotQPEABCMQM----------------------------------------------------------------------
 ## Plot QTL Profile for ABC MQM.
 plot(ABCMQM, plotType = "QTLProfileExt")
+
+## ----plotCIABCMQM-----------------------------------------------------------------------
+## Plot confidence intervals for parental effects for ABC MQM.
+plot(ABCMQM, plotType = "parCIs")
 
 ## ----sumABCMQM--------------------------------------------------------------------------
 ## Print summary
@@ -153,24 +157,28 @@ summary(maizeMPP)
 plot(maizeMPP, plotType = "pedigree")
 
 ## ----maizeSQM, eval=FALSE---------------------------------------------------------------
-#  ## Perform Single-QTL Mapping.
-#  maizeSQM <- selQTLMPP(MPPobj = maizeMPP,
-#                        trait = "mean_DtSILK",
-#                        maxCofactors = 0)
+# ## Perform Single-QTL Mapping.
+# maizeSQM <- selQTLMPP(MPPobj = maizeMPP,
+#                       trait = "mean_DtSILK",
+#                       maxCofactors = 0)
 
 ## ----QPmaizeSQM-------------------------------------------------------------------------
 ## Plot QTL Profile for maize SQM.
 plot(maizeSQM, plotType = "QTLProfile")
 
 ## ----maizeMQM, eval=FALSE---------------------------------------------------------------
-#  ## Perform Multi-QTL Mapping.
-#  maizeMQM <- selQTLMPP(MPPobj = maizeMPP,
-#                        trait = "mean_DtSILK",
-#                        threshold = 5)
+# ## Perform Multi-QTL Mapping.
+# maizeMQM <- selQTLMPP(MPPobj = maizeMPP,
+#                       trait = "mean_DtSILK",
+#                       threshold = 5)
 
 ## ----plotQPEmaizeMQM--------------------------------------------------------------------
 ## Plot QTL Profile for maize MQM.
 plot(maizeMQM, plotType = "QTLProfileExt")
+
+## ----plotCIamizeMQM---------------------------------------------------------------------
+## Plot confidence intervals for parental effects for maize MQM.
+plot(maizeMQM, plotType = "parCIs")
 
 ## ----barleyIBD--------------------------------------------------------------------------
 ## Specify files containing RABBIT output.
@@ -195,15 +203,11 @@ barleyMPP <- readRABBITMPP(infile = inFile,
 ## Summary.
 summary(barleyMPP)
 
-## ----plotPbarleyIBD---------------------------------------------------------------------
-## Plot structure of the pedigree.
-plot(barleyMPP, plotType = "pedigree")
-
 ## ----barleyMQM, eval=FALSE--------------------------------------------------------------
-#  ## Perform Multi-QTL Mapping with threshold 4.
-#  barleyMQM <- selQTLMPP(MPPobj = barleyMPP,
-#                         trait = "Awn_length",
-#                         threshold = 4)
+# ## Perform Multi-QTL Mapping with threshold 4.
+# barleyMQM <- selQTLMPP(MPPobj = barleyMPP,
+#                        trait = "Awn_length",
+#                        threshold = 4)
 
 ## ----QPbarleyMQM16----------------------------------------------------------------------
 ## Plot QTL Profile for barley MQM - chromosome 1-6.
@@ -213,19 +217,23 @@ plot(barleyMQM, plotType = "QTLProfileExt", chr = 1:6)
 ## Plot QTL Profile for barley MQM - chromosome 7.
 plot(barleyMQM, plotType = "QTLProfileExt", chr = 7)
 
+## ----plotCIbarleyMQM--------------------------------------------------------------------
+## Plot confidence intervals for parental effects for maize MQM.
+plot(barleyMQM, plotType = "parCIs")
+
 ## ----sumBarleyMQM-----------------------------------------------------------------------
 ## Summary.
 summary(barleyMQM)
 
 ## ----ABCMQMPar, eval = FALSE------------------------------------------------------------
-#  ## Register parallel back-end with 2 cores.
-#  doParallel::registerDoParallel(cores = 2)
-#  
-#  ## Perform Multi-QTL Mapping.
-#  ABCMQM_Par <- selQTLMPP(MPPobj = ABCMPP,
-#                          trait = "yield",
-#                          threshold = 3,
-#                          parallel = TRUE)
+# ## Register parallel back-end with 2 cores.
+# doParallel::registerDoParallel(cores = 2)
+# 
+# ## Perform Multi-QTL Mapping.
+# ABCMQM_Par <- selQTLMPP(MPPobj = ABCMPP,
+#                         trait = "yield",
+#                         threshold = 3,
+#                         parallel = TRUE)
 
 ## ----winddown, include = FALSE------------------------------------------------
 options(op)

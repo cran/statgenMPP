@@ -51,7 +51,7 @@
 #' marker existing marker positions (\code{FALSE}).
 #' @param verbose Should progress be printed?
 #'
-#' @return An object of class \code{gDataMPP} with the following components:
+#' @returns An object of class \code{gDataMPP} with the following components:
 #' \item{\code{map}}{a data.frame containing map data. Map is sorted by
 #' chromosome and position.}
 #' \item{\code{markers}}{a 3D matrix containing IBD probabilities.}
@@ -179,19 +179,11 @@ calcIBDMPP <- function(crossNames,
   parents <- crossIBD$parents
   nPar <- length(parents)
   ## Construct empty marker matrix.
-  if (packageVersion("statgenIBD") <= "1.0.4") {
-    ## Get marker names.
-    markerNames <- rownames(crossIBD$markers)
-    markers <- array(NA_real_, dim = c(dim(crossIBD$markers)[c(2, 1)], nPar),
-                     dimnames = c(dimnames(crossIBD$markers)[c(2, 1)],
-                                  list(parents)))
-  } else {
-    ## Get marker names.
-    markerNames <- colnames(crossIBD$markers)
-    markers <- array(NA_real_, dim = c(dim(crossIBD$markers)[1:2], nPar),
-                     dimnames = c(dimnames(crossIBD$markers)[1:2],
-                                  list(parents)))
-  }
+  ## Get marker names.
+  markerNames <- colnames(crossIBD$markers)
+  markers <- array(NA_real_, dim = c(dim(crossIBD$markers)[1:2], nPar),
+                   dimnames = c(dimnames(crossIBD$markers)[1:2],
+                                list(parents)))
   ## Fill marker matrix.
   for (i in seq_along(markerNames)) {
     markers[, i, ] <- markers3DtoMat(markers = crossIBD$markers,

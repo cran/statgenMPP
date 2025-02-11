@@ -41,7 +41,7 @@
 #' @param covar A data.frame with extra covariates per genotype. Genotypes
 #' should be in the rows.
 #'
-#' @return An object of class \code{gData} with the following components:
+#' @returns An object of class \code{gData} with the following components:
 #' \item{\code{map}}{a data.frame containing map data. Map is sorted by
 #' chromosome and position.}
 #' \item{\code{markers}}{a sparse matrix from the Matrix package containing
@@ -235,7 +235,7 @@ createGDataMPPInternal <- function(gDataMPP = NULL,
 #' be either numeric indices or character names of list items in \code{pheno}.
 #' If \code{NULL}, all trials are included.
 #'
-#' @return A list with a most four components:
+#' @returns A list with a most four components:
 #' \describe{
 #' \item{mapSum}{A list with number of markers and number of chromosomes in
 #' the map.}
@@ -424,7 +424,7 @@ print.summary.gDataMPP <- function(x,
 #' ## Plot the pedigree.
 #' plot(ABC, plotType = "pedigree")
 #'
-#' @return A ggplot object is invisibly returned.
+#' @returns A ggplot object is invisibly returned.
 #'
 #' @importFrom utils packageVersion
 #' @export
@@ -438,11 +438,7 @@ plot.gDataMPP <- function(x,
   plotType <- match.arg(plotType)
   dotArgs <- list(...)
   map <- x$map
-  if (packageVersion("statgenIBD") <= "1.0.4") {
-    markers <- aperm(x$markers, c(2, 1, 3))
-  } else {
-    markers <- x$markers
-  }
+  markers <- x$markers
   parents <- dimnames(markers)[[3]]
   pedigree <- attr(x = x, which = "pedigree")
   genoCross <- attr(x = x, which = "genoCross")
@@ -465,24 +461,12 @@ plot.gDataMPP <- function(x,
     p <- allGenoPlot(markers = markers, map = map, parents = parents,
                      title = title)
   } else if (plotType == "singleGeno") {
-    if (packageVersion("statgenIBD") <= "1.0.4") {
-      dimnames(markers)[[3]] <- paste0("p",  parents)
-      markers <- markers[, genotype, , drop = FALSE]
-    } else {
-      markers <- markers[genotype, , , drop = FALSE]
-    }
+    markers <- markers[genotype, , , drop = FALSE]
     p <- singleGenoPlot(markers = markers, map = map, parents = parents,
                         genotype = genotype, title = title)
   } else if (plotType == "pedigree") {
-    if (packageVersion("statgenIBD") <= "1.0.4") {
-      p <- pedPlot(pedigree = pedigree, offSpring = colnames(markers),
-                   popType = popType,
-                   multiCross = length(unique(genoCross[["cross"]])) > 1,
-                   genoCross = genoCross, title = title)
-    } else {
-      p <- pedPlot(pedigree = pedigree, offSpring = rownames(markers),
-                   popType = popType, genoCross = genoCross, title = title)
-    }
+    p <- pedPlot(pedigree = pedigree, offSpring = rownames(markers),
+                 popType = popType, genoCross = genoCross, title = title)
   }
   if (output) {
     plot(p)
